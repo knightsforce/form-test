@@ -11,4 +11,4 @@ export function fetchApi(url, params = {}) {
 	}).catch(error => ({error: error.message}));
 }
 
-export const regNoNum = /\D/gi;
+export const regNoNum = /[^\d^\.]/gi;
