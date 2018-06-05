@@ -9,20 +9,19 @@ import {
 
 import './CalculatingExchange.css';
 
-import TextField from '@material-ui/core/TextField';
+import TextField from '../common/textField';
+
 import Button from '@material-ui/core/Button';
 import Select from './Select';
 
-let FormCalculatingExchange = (props) => {
-    return <CalculatingExchange { ...props } />
-}
+import maskNumber from '../../tools/maskNumber';
 
 
 class CalculatingExchange extends Component {
 
     constructor(props) {
         super(props);
-alert('Прочесть доки полностью')
+
     }
 
     renderOption = (item) => {
@@ -41,46 +40,63 @@ alert('Прочесть доки полностью')
         
         let {
             list,
-            errorText
+            errorText,
+            price,
+            handleSubmit,
+            onSubmit
         } = this.props;
 
         return (
             <Form
                 className = 'CalculatingExchange'
-                onSubmit = { this.props.onSubmit }
+                onSubmit = { this.props.handleSubmit(onSubmit) }
             >
                 <Field
                     name = 'from'
                     label = 'From'
+                    type= 'number'
                     component = {TextField}
-                    type = 'text'
-                    props = { {
-                        value: this.props.valueFrom,
-                        onChange: this.props.onChange('valueFrom')
-                    } }
+                    parse={ maskNumber }
                 />
 
-                <Field name="favoriteColor" component = { Select } props = {{options: list.map(this.renderOption)}}/>
+                {/* <Field
+                    name = 'currencyFrom'
+                    component = { Select }
+                    props = { {options: list.map(this.renderOption)} }
+                /> */}
+                <Field
+                    name = 'currencyFrom'
+                    component = { Select }
+                >
+                    { list.map(this.renderOption) }
+                </Field> 
 
                 <Field
                     name = 'to'
                     label = 'to'
+                    type= 'number'
                     component = {TextField}
-                    type = 'text'
-                    onChange  = { this.props.onChange('valueTo') }
-                    props = { {
-                        value: this.props.valueTo,
-                        onChange: this.props.onChange('valueTo')
-                    } } 
+                    parse={ maskNumber }
                 />
 
-                <Field name = 'favoriteColor' component = { Select } props = {{options: list.map(this.renderOption)}}/>
-
+                <Field
+                    name = 'currencyTo'
+                    component = { Select }
+                >
+                    { list.map(this.renderOption) }
+                </Field>
                 <Button
                     children = 'Submit'
                     type = 'submit'
                     disabled = {this.props.disableButton}
                 />
+                {
+                    price && <span className = 'CalculatingExchange-Result' >{ `Результат: ${price}` }</span>
+                }
+
+                {
+                    errorText && <span className = 'CalculatingExchange-Error' >{ `Ошибка: ${errorText}` }</span>
+                }
 
                 {this.props.children}
 
@@ -91,4 +107,4 @@ alert('Прочесть доки полностью')
 
 export default reduxForm({
     form: 'calculating',
-})(FormCalculatingExchange);
+})(props => <CalculatingExchange { ...props } />);

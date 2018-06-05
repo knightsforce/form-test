@@ -3,7 +3,8 @@ import flags from '../flags';
 const initState = {
     list: [],
     status: '',
-    errorText: ''
+    errorText: '',
+    price: ''
 }
 
 export default function currencies(state = initState, action) {
@@ -22,10 +23,26 @@ export default function currencies(state = initState, action) {
             }
 
         case flags.errorCurrencies:
+        case flags.errorCalculate:
             return {
                 ...state,
                 status: initState.status,
                 errorText: action.errorText,
+            }
+
+        case flags.requestCalculate:
+            return {
+                ...state,
+                status: 'request',
+                price: initState.price
+            }
+
+        case flags.compliteCalculate:
+
+            return {
+                ...state,
+                status: initState.status,
+                price: action.price
             }
 
         default:

@@ -5,9 +5,12 @@ import {
 import flags from './flags';
 
 import { 
-    fetchCurrencies
-} from './actions/currencies/currencies';
+    fetchCurrencies,
+    fetchCalculate
+} from './actions';
+
 
 export default function* rootSaga() {
     yield takeLatest(flags.getCurrencies, fetchCurrencies);
+    yield takeLatest(flags.requestCalculate, fetchCalculate)
 }

@@ -5,38 +5,30 @@ import { Throuber } from '../../components/common/throuber';
 
 import CalculatingExchange from '../../components/calculatingExchange/CalculatingExchange';
 
-import maskNumber from '../../tools/maskNumber';
+import {
+    requestCalculate
+} from '../../actions'
+
 
 class ContainerCalculatingExchange extends Component {
 
-    constructor(props) {
-        super(props);
+    onSubmit = (values) => this.props.requestCalculate(values);
+
+    checkDisable = (calculating = {}) => {
+        //Дешевле провереть на undefinde
+        let values = calculating.values;
         
-        this.state = {
-            valueFrom: '',
-            valueTo: ''
+        calculating = null;
+
+        if(values == undefined) {
+            
+            values = null;
+
+            return true;
+       
         }
 
-    }
-
-    onChange = (type) => {
-       
-        let value = '';
-       
-        return (e) => {
-            value = e.target.value;
-
-            this.setState((prevState) => {
-                return {
-                    [type]: maskNumber(prevState[type], value)
-                }
-            });
-        }
-    }
-
-    onSubmit = ({ nativeEvent, ...values }) => {
-        nativeEvent.preventDefault();
-        console.log(values)
+        return !(values.from && values.to);
 
     }
 
@@ -45,45 +37,43 @@ class ContainerCalculatingExchange extends Component {
         let {
             status,
             list,
-            errorText
+            errorText,
+            price
         } = this.props.currencies;
 
-        let {
-            valueFrom,
-            valueTo
-        } = this.state;
 
         return (
             <CalculatingExchange
                 list = { list }
                 errorText = { errorText }
+                price = { price }
 
-                valueFrom = { valueFrom }
-                valueTo = { valueTo }
-
-                disableButton = { !valueFrom || !valueTo }
+                disableButton = { this.checkDisable(this.props.form.calculating) }
 
                 onChange = { this.onChange }
                 onSubmit = { this.onSubmit }
                 
             >
+                
                 {
                     status == 'request' && <Throuber/>
                 }
+
             </CalculatingExchange>
         );
     }
 }
 
 export default connect(
-    (state) => {console.log(state)
+    (state) => {
         return {
-            currencies: state.currencies
+            currencies: state.currencies,
+            form: state.form
         };
     },
     (dispatch) => {
         return {
-            
+            requestCalculate: (values) => dispatch(requestCalculate(values))
         };
     }
 )(ContainerCalculatingExchange);

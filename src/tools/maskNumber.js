@@ -1,8 +1,15 @@
 import { regNoNum } from './tools';
 
-export default function maskNumper(prev, next) {
-    console.warn('Проверить')
-    if(regNoNum.test(next)) return prev;
-    return parseFloat(next) || '';
+// export default function maskNumber(value = '') {
     
-}
+//     if(regNoNum.test(value)) {
+
+//         return value.replace(regNoNum, '');
+
+//     }
+
+//     return value;
+    
+// }
+
+export default (value = '') => value.replace(regNoNum, '');

@@ -1,5 +1,7 @@
+const urlApp = 'https://api.coinmarketcap.com/v1';
+
 export function fetchApi(url, params = {}) {
-	return fetch(url, params).then(response=>{
+	return fetch(`${urlApp}${url}`, params).then(response=>{
 		return response.json()
 						.then(json => ({
 							status: response.status,

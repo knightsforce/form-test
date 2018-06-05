@@ -4,3 +4,11 @@
     position: relative;
     padding: 50px;
 }
+
+.CalculatingExchange-Result, .CalculatingExchange-Error {
+    margin-left: 20px;
+}
+
+.CalculatingExchange-Error {
+    color: red;
+}

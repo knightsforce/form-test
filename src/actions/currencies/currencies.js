@@ -8,7 +8,7 @@ import {
 import { fetchApi } from '../../tools/tools';
 import flags from '../../flags';
 
-const urlApp = 'https://api.coinmarketcap.com/v1';
+export const selectCurrencies = state => state.currencies;
 
 export function getCurrencies() {
     return {
@@ -32,7 +32,7 @@ function errorCurrencies(errorText) {
 
 export function* fetchCurrencies() {
     let { status, data, error } = yield call(() => (
-        fetchApi(`${urlApp}/ticker/?limit=0`, {
+        fetchApi('/ticker/?limit=0', {
             method: 'GET'
         })
     ));
