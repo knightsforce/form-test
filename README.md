@@ -1,3 +1,14 @@
+## Примечание
+
+Файлы проекта:
+actions - action приложения, генераторы и action creators.
+components - компоненты, отвечающие за отрисовку интерфейса.
+containers - контейнеры с логикой для components
+reducers - редьюсеры
+tools - Вспомогательные функции
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
